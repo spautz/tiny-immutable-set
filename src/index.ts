@@ -56,4 +56,4 @@ const set = <T = ObjectOrArray>(
   return newRoot;
 };
 
-export default set;
+export { set };

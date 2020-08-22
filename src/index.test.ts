@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import set from '.';
+import { set } from '.';
 
 describe('basic functionality', () => {
   describe('shallow objects', () => {
