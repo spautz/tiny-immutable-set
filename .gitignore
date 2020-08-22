@@ -1,0 +1,10 @@
+*.log*
+.DS_Store
+
+.idea/
+.vscode/
+build/
+dist/
+coverage/
+node_modules/
+storybook-static/
