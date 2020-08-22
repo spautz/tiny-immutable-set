@@ -1,10 +1,30 @@
 /* eslint-env jest */
 import { set } from '.';
 
+/*
+ * This comes from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
+ */
+function deepFreeze(object: any) {
+  // Retrieve the property names defined on object
+  var propNames = Object.getOwnPropertyNames(object);
+
+  // Freeze properties before freezing self
+
+  for (let name of propNames) {
+    let value = object[name];
+
+    if (value && typeof value === 'object') {
+      deepFreeze(value);
+    }
+  }
+
+  return Object.freeze(object);
+}
+
 describe('basic functionality', () => {
   describe('shallow objects', () => {
     it('sets new values', () => {
-      const obj = { abc: 123 };
+      const obj = deepFreeze({ abc: 123 });
       const newObj = set(obj, 'def', 456);
 
       expect(newObj).toEqual({ abc: 123, def: 456 });
@@ -12,7 +32,7 @@ describe('basic functionality', () => {
     });
 
     it('sets existing values', () => {
-      const obj = { abc: 123 };
+      const obj = deepFreeze({ abc: 123 });
       const newObj = set(obj, 'abc', 456);
 
       expect(newObj).toEqual({ abc: 456 });
@@ -20,7 +40,7 @@ describe('basic functionality', () => {
     });
 
     it('sets value in arrays', () => {
-      const obj = ['one', 'two', 'three'];
+      const obj = deepFreeze(['one', 'two', 'three']);
       const newObj = set(obj, 1, 456);
 
       expect(newObj).toEqual(['one', 456, 'three']);
@@ -37,6 +57,7 @@ describe('basic functionality', () => {
           ghi: [123],
         },
       };
+      deepFreeze(obj);
     });
 
     it('sets new deep values', () => {
