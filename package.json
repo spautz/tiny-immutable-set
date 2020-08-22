@@ -2,7 +2,12 @@
   "name": "tiny-immutable-set",
   "version": "0.1.0",
   "description": "Minimal, immutable deep set",
-  "keywords": [],
+  "keywords": [
+    "immutable set",
+    "tiny-set",
+    "lodash set",
+    "deep set"
+  ],
   "license": "MIT",
   "homepage": "https://github.com/spautz/tiny-immutable-set#readme",
   "bugs": "https://github.com/spautz/tiny-immutable-set/issues",
