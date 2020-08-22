@@ -1,26 +1,23 @@
-type RootObjectType = Record<string, any> | Array<any>;
-
 const { isArray } = Array;
 
-type CloneObject = (object: Record<string, any>) => Record<string, any>;
-type CloneArray = (object: Array<any>) => Array<any>;
-const clone: CloneObject | CloneArray = (objectOrArray: RootObjectType) =>
+type ObjectOrArray = Record<string, any> | Array<any>;
+const clone = (objectOrArray: ObjectOrArray): ObjectOrArray =>
   isArray(objectOrArray) ? Array.from(objectOrArray) : Object.assign({}, objectOrArray);
 
-const set = (
-  root: RootObjectType,
-  path: string | Array<string>,
+const set = <T = ObjectOrArray>(
+  root: T,
+  path: string | number | Array<string | number>,
   newValue: unknown,
-): RootObjectType => {
-  const newRoot: RootObjectType = clone(root);
+): T => {
+  const newRoot: any = clone(root);
 
-  if (path in newRoot) {
+  if (path in newRoot || typeof path === 'number') {
     // Just set it directly: no need to loop
     newRoot[path as string] = newValue;
     return newRoot;
   }
 
-  let currentParent = newRoot;
+  let currentParent: any = newRoot;
   let previousKey: string;
   let previousKeyIsArrayIndex: boolean = false;
   // This approach and regex come from https://github.com/NickGard/tiny-get
