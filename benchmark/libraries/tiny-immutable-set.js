@@ -4,6 +4,7 @@ const tinyImmutableSetCase = {
   label: 'tiny-immutable-set',
   setWithString: set,
   setWithArray: set,
+  setWithArrayString: set,
 };
 
 module.exports = tinyImmutableSetCase;

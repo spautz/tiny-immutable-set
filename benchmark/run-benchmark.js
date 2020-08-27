@@ -1,5 +1,12 @@
 const { Timeline } = require('@nelsongomes/ts-timeframe');
 
+const {
+  generateScenarios,
+  runStringScenario,
+  runArrayScenario,
+  runArrayStringScenario,
+} = require('./scenarios');
+
 const allLibraries = [
   require('./libraries/immer'),
   require('./libraries/immutable'),
@@ -9,91 +16,21 @@ const allLibraries = [
   require('./libraries/tiny-immutable-set'),
 ];
 
-const allScenarios = [runStringScenario, runArrayScenario, runStringScenario, runArrayScenario];
-
-const iterationsPerRun = 50000;
-
-// An object of arrays of objects, with 5 items at each level
-const TEST_OBJECT_BREADTH = 5;
-const TEST_OBJECT = {};
-for (let propNum = 0; propNum < TEST_OBJECT_BREADTH; propNum++) {
-  TEST_OBJECT[`prop${propNum}`] = [];
-  for (let indexNum = 0; indexNum < TEST_OBJECT_BREADTH; indexNum++) {
-    const obj = {};
-    for (let deepNum = 0; deepNum < TEST_OBJECT_BREADTH; deepNum++) {
-      obj[`deep${deepNum}`] = deepNum;
-    }
-    TEST_OBJECT[`prop${propNum}`].push(obj);
-  }
-}
-
-//////////////////////////////////
-function deepFreeze(object) {
-  // Retrieve the property names defined on object
-  var propNames = Object.getOwnPropertyNames(object);
-
-  // Freeze properties before freezing self
-
-  for (let name of propNames) {
-    let value = object[name];
-
-    if (value && typeof value === 'object') {
-      deepFreeze(value);
-    }
-  }
-
-  return Object.freeze(object);
-}
-
-deepFreeze(TEST_OBJECT);
-
-//////////////////////////////////
-
-function runStringScenario(libraryInfo) {
-  const { label: libraryLabel, setWithString, timeline } = libraryInfo;
-
-  if (setWithString) {
-    // Pre-generate all paths
-    const allPaths = [];
-    for (let i = 0; i < iterationsPerRun; i++) {
-      const propNum = i % TEST_OBJECT_BREADTH;
-      const indexNum = (i / TEST_OBJECT_BREADTH) % TEST_OBJECT_BREADTH;
-      const deepNum = (i / (TEST_OBJECT_BREADTH * TEST_OBJECT_BREADTH)) % TEST_OBJECT_BREADTH;
-      allPaths.push(`${propNum}[${indexNum}].${deepNum}`);
-    }
-
-    const event = timeline.startEvent(['string-path']);
-    for (let i = 0; i < iterationsPerRun; i++) {
-      setWithString(TEST_OBJECT, allPaths[i], i);
-    }
-    event.end();
-  } else {
-    console.error(`Library "${libraryLabel}" is missing the setWithArray scenario!`);
-  }
-}
-
-function runArrayScenario(libraryInfo) {
-  const { libraryLabel, setWithArray, timeline } = libraryInfo;
-
-  if (setWithArray) {
-    // Pre-generate all paths
-    const allPaths = [];
-    for (let i = 0; i < iterationsPerRun; i++) {
-      const prop = i % TEST_OBJECT_BREADTH;
-      const index = (i / TEST_OBJECT_BREADTH) % TEST_OBJECT_BREADTH;
-      const deep = (i / (TEST_OBJECT_BREADTH * TEST_OBJECT_BREADTH)) % TEST_OBJECT_BREADTH;
-      allPaths.push([prop, index, deep]);
-    }
-
-    const event = timeline.startEvent(['array-path']);
-    for (let i = 0; i < iterationsPerRun; i++) {
-      setWithArray(TEST_OBJECT, allPaths[i], i);
-    }
-    event.end();
-  } else {
-    console.error(`Library "${libraryLabel}" is missing the setWithArray scenario!`);
-  }
-}
+const allScenarios = generateScenarios({
+  scenarioList: [
+    // runStringScenario,
+    // runArrayScenario,
+    // runArrayStringScenario,
+    // // Weight the plain scenarios more, since those are likely the most common case for most people
+    // runStringScenario,
+    // runArrayScenario,
+    runArrayStringScenario,
+    runArrayScenario,
+    runArrayStringScenario,
+    runArrayScenario,
+  ],
+  iterationsPerRun: 50000,
+});
 
 function accumulateTime(timeInfo, timeLineEvent) {
   const [seconds, nanoseconds] = timeLineEvent.getDurationRaw();
@@ -117,7 +54,10 @@ for (let libNum = 0; libNum < allLibraries.length; libNum++) {
   allLibraries[libNum].timeline = new Timeline();
 
   for (let scenarioNum = 0; scenarioNum < allScenarios.length; scenarioNum++) {
-    allScenarios[scenarioNum](allLibraries[libNum]);
+    const library = allLibraries[libNum];
+    const scenario = allScenarios[scenarioNum];
+    console.log(`Running ${scenario.displayName} for ${library.label}`);
+    scenario(library);
   }
 }
 
