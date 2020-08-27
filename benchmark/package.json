@@ -17,7 +17,7 @@
   },
   "sideEffects": false,
   "scripts": {
-    "benchmark": "node ./benchmark.js"
+    "benchmark": "node ./run-benchmark.js"
   },
   "dependencies": {
     "@nelsongomes/ts-timeframe": "^0.2.2",
