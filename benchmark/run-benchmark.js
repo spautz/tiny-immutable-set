@@ -11,10 +11,10 @@ const allLibraries = [
 
 const allScenarios = [runStringScenario, runArrayScenario, runStringScenario, runArrayScenario];
 
-const iterationsPerRun = 25000;
+const iterationsPerRun = 50000;
 
 // An object of arrays of objects, with 5 items at each level
-const TEST_OBJECT_BREADTH = 10;
+const TEST_OBJECT_BREADTH = 5;
 const TEST_OBJECT = {};
 for (let propNum = 0; propNum < TEST_OBJECT_BREADTH; propNum++) {
   TEST_OBJECT[`prop${propNum}`] = [];
@@ -44,11 +44,13 @@ function deepFreeze(object) {
 
   return Object.freeze(object);
 }
+
 deepFreeze(TEST_OBJECT);
+
 //////////////////////////////////
 
 function runStringScenario(libraryInfo) {
-  const { label, setWithString, timeline } = libraryInfo;
+  const { label: libraryLabel, setWithString, timeline } = libraryInfo;
 
   if (setWithString) {
     // Pre-generate all paths
@@ -66,12 +68,12 @@ function runStringScenario(libraryInfo) {
     }
     event.end();
   } else {
-    console.warn(`Library "${label}" is missing the setWithArray scenario`);
+    console.error(`Library "${libraryLabel}" is missing the setWithArray scenario!`);
   }
 }
 
 function runArrayScenario(libraryInfo) {
-  const { label, setWithArray, timeline } = libraryInfo;
+  const { libraryLabel, setWithArray, timeline } = libraryInfo;
 
   if (setWithArray) {
     // Pre-generate all paths
@@ -89,8 +91,22 @@ function runArrayScenario(libraryInfo) {
     }
     event.end();
   } else {
-    console.warn(`Library "${label}" is missing the setWithArray scenario`);
+    console.error(`Library "${libraryLabel}" is missing the setWithArray scenario!`);
   }
+}
+
+function accumulateTime(timeInfo, timeLineEvent) {
+  const [seconds, nanoseconds] = timeLineEvent.getDurationRaw();
+
+  timeInfo.seconds += seconds;
+  timeInfo.nanoseconds += nanoseconds;
+  while (timeInfo.nanoseconds > 1e9) {
+    timeInfo.seconds++;
+    timeInfo.nanoseconds -= 1e9;
+  }
+
+  timeInfo.count++;
+  return timeInfo;
 }
 
 // We're going to run through each (library, scenario) tuple twice:
@@ -114,18 +130,37 @@ for (let scenarioNum = 0; scenarioNum < allScenarios.length; scenarioNum++) {
 // Now let's take a look at the results
 
 for (let libNum = 0; libNum < allLibraries.length; libNum++) {
-  allLibraries[libNum].timeline.end();
+  const { label: libraryLabel, timeline } = allLibraries[libNum];
+  timeline.end();
 
-  const { label, timeline } = allLibraries[libNum];
-  const [seconds, nanoseconds] = timeline.sumEventsDuration();
-  const totalCount = timeline.count();
-  const averageTime = (seconds * 1e9) / totalCount + nanoseconds / totalCount;
-  console.log(`==== ${label} ====`);
-  console.log(
-    `Average time: ${seconds}.${nanoseconds}/${totalCount} = ${averageTime}ns (${averageTime /
-      1e9}s)`,
-  );
+  // Average together each scenario's times, as well as the overall time.
+  // Similar to ts-timeframe, seconds and nanoseconds are stored separately for more accurate calculations.
+  const totalTimeByLabel = {};
+  const totalTimeSum = { seconds: 0, nanoseconds: 0, count: 0 };
+  // Start from 1 to skip time that wasn't devoted to any task
+  for (let i = 1; i < timeline.timeLineEvents.length; i++) {
+    const thisEvent = timeline.timeLineEvents[i];
 
-  console.log(timeline.getDuration());
-  console.log(timeline.generateAnalyticInfo());
+    // Accumulate label time
+    const [scenarioLabel] = thisEvent.getLabels();
+    totalTimeByLabel[scenarioLabel] = totalTimeByLabel[scenarioLabel] || {
+      seconds: 0,
+      nanoseconds: 0,
+      count: 0,
+    };
+    accumulateTime(totalTimeByLabel[scenarioLabel], thisEvent);
+
+    // Accumulate total time
+    accumulateTime(totalTimeSum, thisEvent);
+  }
+
+  // Now output the results
+  console.log(`==== ${libraryLabel} ====`);
+  Object.keys(totalTimeByLabel).forEach((scenarioLabel) => {
+    const { seconds, nanoseconds } = totalTimeByLabel[scenarioLabel];
+    console.log(`${scenarioLabel}: ${seconds}.${nanoseconds}`);
+  });
+  const { seconds, nanoseconds } = totalTimeSum;
+  console.log(`Overall: ${seconds}.${nanoseconds}`);
 }
+console.log('==== (end of benchmark results) ====');
