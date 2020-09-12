@@ -1,0 +1,31 @@
+{
+  "name": "tiny-immutable-set-benchmark",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Benchmarking tool for tiny-immutable-set",
+  "license": "MIT",
+  "homepage": "https://github.com/spautz/tiny-immutable-set/benchmark#readme",
+  "bugs": "https://github.com/spautz/tiny-immutable-set/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/spautz/tiny-immutable-set.git",
+    "directory": "benchmark"
+  },
+  "author": {
+    "name": "Steven Pautz",
+    "url": "https://stevenpautz.com/"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "benchmark": "node ./run-benchmark.js"
+  },
+  "dependencies": {
+    "@nelsongomes/ts-timeframe": "^0.2.2",
+    "immer": "^7.0.8",
+    "immutable": "^4.0.0-rc.12",
+    "immutable-assign": "^2.1.4",
+    "lodash": "^4.17.20",
+    "seamless-immutable": "^7.1.4",
+    "tiny-immutable-set": "^0.1.0"
+  }
+}
