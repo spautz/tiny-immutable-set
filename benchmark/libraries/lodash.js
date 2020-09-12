@@ -5,8 +5,10 @@ const set = (obj, path, value) => setWith(clone(obj), path, value, clone);
 
 const lodashCase = {
   label: 'lodash',
-  setWithString: set,
+  prepareTestObject: null,
+  completeTestObject: null,
   setWithArray: set,
+  setWithString: set,
   setWithArrayString: set,
 };
 

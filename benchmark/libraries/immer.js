@@ -13,13 +13,15 @@ const setWithArray = (obj, path, value) => {
 
 const immerCase = {
   label: 'immer',
+  prepareTestObject: null,
+  completeTestObject: null,
+  setWithArray,
   setWithString: (obj, path, value) => {
     const pathParts = path.split('.');
     return setWithArray(obj, pathParts, value);
   },
-  setWithArray,
   setWithArrayString: (obj, path, value) => {
-    const pathParts = path.split(/[\.\[\]]/).filter((token) => !!token);
+    const pathParts = path.split(/[.[\]]+/).filter((part) => !!part);
     return setWithArray(obj, pathParts, value);
   },
 };

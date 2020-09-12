@@ -2,8 +2,11 @@ const seamlessImmutable = require('seamless-immutable');
 
 const seamlessImmutableCase = {
   label: 'seamless-immutable',
-  setWithString: null,
+  prepareTestObject: null,
+  completeTestObject: null,
   setWithArray: null,
+  setWithString: null,
+  setWithArrayString: null,
 };
 
 module.exports = seamlessImmutableCase;

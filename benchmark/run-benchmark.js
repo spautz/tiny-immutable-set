@@ -1,8 +1,10 @@
+const isEqual = require('lodash/isEqual');
 const { Timeline } = require('@nelsongomes/ts-timeframe');
 
 const options = require('./options');
 const allLibraries = require('./libraries');
 const allScenarios = require('./scenarios');
+const TEST_OBJECT = require('./testObject');
 
 function accumulateTime(timeInfo, timeLineEvent) {
   timeInfo = timeInfo || { seconds: 0, nanoseconds: 0, eventCount: 0 };
@@ -21,9 +23,8 @@ function accumulateTime(timeInfo, timeLineEvent) {
 
 function formatTime(timeInfo) {
   if (timeInfo) {
-    const { seconds, nanoseconds, eventCount } = timeInfo;
-    const duration = `${seconds}.${nanoseconds}`;
-    return duration;
+    const { seconds, nanoseconds } = timeInfo;
+    return `${seconds}.${nanoseconds}`;
   }
   return '(no result)';
 }
@@ -31,7 +32,7 @@ function formatTime(timeInfo) {
 // Create a timeline to track each (library,scenario) tuple
 const timelines = allLibraries.map(() => allScenarios.map(() => new Timeline()));
 
-// First, set up each scenario's test cases
+// Set up each scenario's test cases
 const scenarioCases = allScenarios.map((scenarioInfo) => {
   const { numIterations } = options;
   const { id, label, setup } = scenarioInfo;
@@ -39,7 +40,7 @@ const scenarioCases = allScenarios.map((scenarioInfo) => {
   if (!setup) {
     throw new Error(`Cannot set up scenario ${id} (${label}): It has no setup()`);
   }
-  const cases = setup(numIterations);
+  const cases = setup(TEST_OBJECT, numIterations);
 
   if (!cases || cases.length !== numIterations) {
     throw new Error(
@@ -50,12 +51,20 @@ const scenarioCases = allScenarios.map((scenarioInfo) => {
   return cases;
 });
 
+const allResults = [];
+
 function runTestCases(libraryNum, scenarioNum) {
   const { numIterations, showLogs, showWarnings } = options;
   const { label: scenarioLabel, id: scenarioId } = allScenarios[scenarioNum];
-  const { label: libraryLabel, [scenarioId]: libraryFn } = allLibraries[libraryNum];
+  const {
+    label: libraryLabel,
+    [scenarioId]: libraryFn,
+    prepareTestObject,
+    completeTestObject,
+  } = allLibraries[libraryNum];
   const cases = scenarioCases[scenarioNum];
   const timeline = timelines[libraryNum][scenarioNum];
+  allResults[libraryNum] = allResults[libraryNum] || [];
 
   if (libraryFn) {
     if (showLogs) {
@@ -63,8 +72,12 @@ function runTestCases(libraryNum, scenarioNum) {
     }
 
     const event = timeline.startEvent();
+    let testObject = prepareTestObject ? prepareTestObject(TEST_OBJECT) : TEST_OBJECT;
     for (let i = 0; i < numIterations; i++) {
-      libraryFn.apply(null, cases[i]);
+      testObject = libraryFn(testObject, cases[i], i);
+    }
+    if (completeTestObject) {
+      allResults[libraryNum][scenarioNum] = completeTestObject(testObject);
     }
     event.end();
   } else if (showWarnings) {
@@ -100,6 +113,30 @@ for (let scenarioNum = 0; scenarioNum < allScenarios.length; scenarioNum++) {
   if (teardown) {
     const cases = scenarioCases[scenarioNum];
     teardown(cases);
+  }
+}
+
+// Validate allResults to make sure everything generated the same end state
+for (let scenarioNum = 0; scenarioNum < allScenarios.length; scenarioNum++) {
+  for (let libraryNum = 0; libraryNum < allLibraries.length; libraryNum++) {
+    const myResults = allResults[libraryNum][scenarioNum];
+    // @TODO: Better search
+    const otherLibraryResults = allResults.map(
+      (scenarioResults) => scenarioResults && scenarioResults[scenarioNum],
+    );
+
+    for (let otherLibraryNum = 0; otherLibraryNum < otherLibraryResults.length; otherLibraryNum++) {
+      if (
+        otherLibraryNum !== libraryNum &&
+        myResults &&
+        otherLibraryResults[otherLibraryNum] &&
+        !isEqual(myResults, otherLibraryResults[otherLibraryNum])
+      ) {
+        console.error(
+          `Library error: the results for ${allLibraries[libraryNum].label} and ${allLibraries[otherLibraryNum].label} do not match each other, for scenario ${allScenarios[scenarioNum].id} (${allScenarios[scenarioNum].label})`,
+        );
+      }
+    }
   }
 }
 
