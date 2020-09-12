@@ -5,7 +5,7 @@ const setWithArray = (obj, path, value) => {
     let index = 0;
     const pathToTraverse = path.length - 1;
     for (; index < pathToTraverse; index++) {
-      draftObj = draftObj[path[index]];
+      draftObj = draftObj[path[index]] || {};
     }
     draftObj[path[index]] = value;
   });
