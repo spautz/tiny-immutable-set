@@ -25,4 +25,4 @@ The original `state` is not modified.
 - If you're using [lodash](https://lodash.com) then you don't need this: [see this thread for alternatives](https://github.com/lodash/lodash/issues/1696#issuecomment-328335502).
 
 - The small bundle size of this library comes with a slight speed tradeoff. This library is a little slower than
-  immutable-assign and immutable.js, but a little faster than Immer and seamless-immutable. [See full benchmark here.](./benchmark)
+  immutable-assign and immutable.js, but a little faster than Immer and seamless-immutable.
