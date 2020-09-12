@@ -1,6 +1,6 @@
 const options = {
   /* How many times each scenario is run for each library */
-  numIterations: 10000,
+  numIterations: 100000,
   /* Whether to console.log while libraries and scenarios are running */
   showLogs: true,
   /* Whether to console.warn if a library hasn't implemented a scenario */

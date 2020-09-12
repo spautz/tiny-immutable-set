@@ -40,4 +40,6 @@ for (let propNum = 0; propNum < TEST_OBJECT_BREADTH; propNum++) {
   }
 }
 
+Object.freeze(TEST_OBJECT);
+
 module.exports = TEST_OBJECT;

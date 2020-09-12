@@ -47,7 +47,7 @@ function generateMissingPaths(object, numMissingPaths) {
     const path = getRandomPath(object);
     // And change one of the keys to something that [almost certainly] doesn't exist
     const indexToChange = Math.floor(Math.random() * path.length);
-    path.splice(indexToChange, 1, `rand${Math.random()}`);
+    path.splice(indexToChange, 1, `rand${Math.floor(Math.random() * Number.MAX_SAFE_INTEGER)}`);
 
     paths.push(path);
   }

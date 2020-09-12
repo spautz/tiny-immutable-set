@@ -25,7 +25,7 @@ function formatTime(timeInfo) {
     const duration = `${seconds}.${nanoseconds}`;
     return duration;
   }
-  return '---';
+  return '(no result)';
 }
 
 // Create a timeline to track each (library,scenario) tuple
