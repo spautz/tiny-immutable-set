@@ -4,6 +4,9 @@ type ObjectOrArray = Record<string, any> | Array<any>;
 const clone = (objectOrArray: ObjectOrArray): ObjectOrArray =>
   isArray(objectOrArray) ? Array.from(objectOrArray) : Object.assign({}, objectOrArray);
 
+// This approach and regex come from https://github.com/NickGard/tiny-get
+const pathSeperatorRegex = /\[\s*(['"])(.*?)\1\s*\]|^\s*(\w+)\s*(?=\.|\[|$)|\.\s*(\w*)\s*(?=\.|\[|$)|\[\s*(-?\d+)\s*\]/g;
+
 const set = <T = ObjectOrArray>(
   root: T,
   path: string | number | Array<string | number>,
@@ -25,7 +28,8 @@ const set = <T = ObjectOrArray>(
     path = "['" + path.join("']['") + "']";
   }
   path.replace(
-    /\[\s*(['"])(.*?)\1\s*\]|^\s*(\w+)\s*(?=\.|\[|$)|\.\s*(\w*)\s*(?=\.|\[|$)|\[\s*(-?\d+)\s*\]/g,
+    pathSeperatorRegex,
+    // @ts-ignore
     (wholeMatch, _quotationMark, quotedProp, firstLevel, namedProp, index) => {
       if (previousKey) {
         // Clone (or create) the object/array that we were just at: this lets us keep it attached to its parent.
@@ -48,7 +52,7 @@ const set = <T = ObjectOrArray>(
       previousKeyIsArrayIndex = !!index;
 
       // This return makes the linter happy
-      return wholeMatch;
+      // return wholeMatch;
     },
   );
 

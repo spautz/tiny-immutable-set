@@ -31,5 +31,5 @@
     "forceConsistentCasingInFileNames": true
   },
   "include": ["src", "tests"],
-  "exclude": ["node_modules"]
+  "exclude": ["benchmark", "node_modules"]
 }
