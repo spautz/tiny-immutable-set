@@ -14,7 +14,7 @@ const set = <T = ObjectOrArray>(
 ): T => {
   const newRoot: any = clone(root);
 
-  if (path in newRoot || typeof path === 'number') {
+  if (typeof path === 'number' || (!isArray(path) && path in newRoot)) {
     // Just set it directly: no need to loop
     newRoot[path as string] = newValue;
     return newRoot;
