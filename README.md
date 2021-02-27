@@ -5,10 +5,10 @@ A minimal, immutable, deep set utility for Javascript objects and arrays.
 Inspired by, and based on, [NickGard's tiny-get](https://github.com/NickGard/tiny-get)
 
 [![npm version](https://img.shields.io/npm/v/tiny-immutable-set.svg)](https://www.npmjs.com/package/tiny-immutable-set)
-[![build status](https://img.shields.io/travis/com/spautz/tiny-immutable-set.svg)](https://travis-ci.com/spautz/tiny-immutable-set)
+[![build status](https://github.com/spautz/tiny-immutable-set/workflows/CI/badge.svg)](https://github.com/spautz/tiny-immutable-set/actions)
 [![dependencies status](https://img.shields.io/badge/dependencies-none-green.svg)](https://david-dm.org/spautz/tiny-immutable-set)
 [![gzip size](https://img.badgesize.io/https://unpkg.com/tiny-immutable-set@latest/dist/tiny-immutable-set.cjs.production.min.js?compression=gzip)](https://bundlephobia.com/result?p=tiny-immutable-set)
-[![test coverage](https://img.shields.io/coveralls/github/spautz/tiny-immutable-set.svg)](https://coveralls.io/github/spautz/tiny-immutable-set)
+[![test coverage](https://img.shields.io/coveralls/github/spautz/tiny-immutable-set/main.svg)](https://coveralls.io/github/spautz/tiny-immutable-set?branch=main)
 
 ## Usage
 
