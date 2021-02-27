@@ -5,6 +5,7 @@
 .vscode/
 build/
 dist/
+legacy-types/
 coverage/
 node_modules/
 storybook-static/

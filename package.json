@@ -21,6 +21,7 @@
   },
   "files": [
     "dist/",
+    "legacy-types/",
     "src/",
     "LICENSE",
     "*.md"
@@ -54,12 +55,10 @@
     "ci": "yon run clean && yon run dev:readonly && yon run test:report",
     "____ INDIVIDUAL COMMANDS ___________________________________________": "",
     "build": "tsdx build",
-    "build:clean": "rimraf ./dist",
-    "build:types2": "echo SKIP",
-    "build:types": "yon run build:types:3.1 && yon run build:types:3.8 && yon run build:types:4.0 && yon run rimraf ./dist/types-*/types-*/",
-    "build:types:3.1": "downlevel-dts ./dist/ ./dist/types-3.1/ --to=3.1",
-    "build:types:3.8": "downlevel-dts ./dist/ ./dist/types-3.8/ --to=3.8",
-    "build:types:4.0": "downlevel-dts ./dist/ ./dist/types-4.0/ --to=4.0",
+    "build:clean": "rimraf ./dist ./legacy-types",
+    "build:types": "yon run build:types:3.x && yon run build:types:4.x",
+    "build:types:3.x": "downlevel-dts ./dist ./legacy-types/ts3.x/dist --to=3.0",
+    "build:types:4.x": "downlevel-dts ./dist ./dist --to=4.0",
     "build:watch": "tsdx watch",
     "format": "prettier --write \"**/*.*\"",
     "format:verify": "prettier --list-different \"**/*.*\"",
@@ -102,19 +101,9 @@
     }
   },
   "typesVersions": {
-    "<3.8": {
-      "*": [
-        "dist/types-3.1/*"
-      ]
-    },
     "<4": {
       "*": [
-        "dist/types-3.8/*"
-      ]
-    },
-    "<4.2": {
-      "*": [
-        "dist/types-4.0/*"
+        "legacy-types/ts3.x/*"
       ]
     }
   }
