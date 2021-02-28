@@ -21,14 +21,15 @@
   },
   "files": [
     "dist/",
+    "legacy-types/",
     "src/",
     "LICENSE",
     "*.md"
   ],
   "source": "src/index.ts",
   "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "jsnext:main": "dist/index.esm.js",
+  "module": "dist/tiny-immutable-set.esm.js",
+  "jsnext:main": "dist/tiny-immutable-set.esm.js",
   "types": "dist/index.d.ts",
   "sideEffects": false,
   "engines": {
@@ -40,8 +41,9 @@
     "prepare": "yon run build",
     "prebuild": "yon run build:clean",
     "prerelease": "yon run build:clean",
-    "prepublishOnly": "yarn run dev:readonly && yarn run build && pinst --disable",
+    "prepublishOnly": "yarn run dev:readonly && yarn run build && yarn run pinst --disable",
     "pretest": "yon run test:clean",
+    "postbuild": "yon run build:types",
     "postinstall": "husky install",
     "postpublish": "pinst --enable",
     "____ INTEGRATION ___________________________________________________": "",
@@ -53,7 +55,10 @@
     "ci": "yon run clean && yon run dev:readonly && yon run test:report",
     "____ INDIVIDUAL COMMANDS ___________________________________________": "",
     "build": "tsdx build",
-    "build:clean": "rimraf ./dist",
+    "build:clean": "rimraf ./dist ./legacy-types",
+    "build:types": "yon run build:types:3.x && yon run build:types:4.x",
+    "build:types:3.x": "downlevel-dts ./dist ./legacy-types/ts3.x/dist --to=3.0",
+    "build:types:4.x": "downlevel-dts ./dist ./dist --to=4.0",
     "build:watch": "tsdx watch",
     "format": "prettier --write \"**/*.*\"",
     "format:verify": "prettier --list-different \"**/*.*\"",
@@ -74,6 +79,7 @@
     "@ngard/tiny-get": "1.2.2",
     "@types/jest": "26.0.20",
     "@types/node": "14.14.31",
+    "downlevel-dts": "0.7.0",
     "husky": "5.1.1",
     "lint-staged": "10.5.4",
     "pinst": "2.1.6",
@@ -92,6 +98,13 @@
   "standard-version": {
     "scripts": {
       "postchangelog": "yon run format"
+    }
+  },
+  "typesVersions": {
+    "<4": {
+      "*": [
+        "legacy-types/ts3.x/*"
+      ]
     }
   }
 }
