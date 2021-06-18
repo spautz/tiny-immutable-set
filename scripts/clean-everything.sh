@@ -6,7 +6,7 @@ set -e
 # This script runs from the project root
 cd "$(dirname "$0")/.."
 
-source scripts/helpers.sh
+source ./scripts/helpers/helpers.sh
 
 ###################################################################################################
 # Halt running processes and local servers
@@ -22,10 +22,18 @@ fi
 ##################################################################################################
 # Clear caches
 
-run_npm_command jest --clearCache --config={}
+if [ -d "./node_modules/" ]; then
+  run_command yarn clean
+  run_npm_command jest --clearCache
+else
+  run_npm_command jest --clearCache --config={}
+fi
+
+if command_exists yarn; then
+  run_command yarn cache clean
+fi
 
 run_command npm cache clean --force
-run_command yarn cache clean
 
 if command_exists watchman; then
   run_command watchman watch-del-all
@@ -40,10 +48,25 @@ run_command "rm -rf
 
 run_command "rm -rf
   .yarn
+  build/
   coverage/
   dist/
+  legacy-types/
+  lib-dist/
   node_modules/
+  storybook-static/
+  lerna-debug.log*
   npm-debug.log*
   yarn-debug.log*
   yarn-error.log*
   "
+
+REMAINING_FILES=$(git clean -xdn)
+if [[ $REMAINING_FILES ]]; then
+  echo "Ignored files left:"
+  echo "$REMAINING_FILES"
+fi;
+
+###################################################################################################
+
+echo "Environment reset completed"
