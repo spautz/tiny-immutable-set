@@ -7,7 +7,7 @@ const clone = (objectOrArray: ObjectOrArray): ObjectOrArray =>
 // This approach and regex come from https://github.com/NickGard/tiny-get
 const pathSeperatorRegex = /\[\s*(['"])(.*?)\1\s*\]|^\s*(\w+)\s*(?=\.|\[|$)|\.\s*(\w*)\s*(?=\.|\[|$)|\[\s*(-?\d+)\s*\]/g;
 
-const set = <T = ObjectOrArray>(
+const set = <T extends ObjectOrArray = ObjectOrArray>(
   root: T,
   path: string | number | Array<string | number>,
   newValue: unknown,
