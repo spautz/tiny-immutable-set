@@ -23,14 +23,14 @@ fi
 # Clear caches
 
 if [ -d "./node_modules/" ]; then
-  run_command yarn clean
+  run_command pnpm clean
   run_npm_command jest --clearCache
 else
   run_npm_command jest --clearCache --config={}
 fi
 
-if command_exists yarn; then
-  run_command yarn cache clean
+if command_exists pnpm; then
+  run_command pnpm cache clean
 fi
 
 run_command npm cache clean --force
@@ -47,7 +47,7 @@ run_command "rm -rf
 # Remove generated files
 
 run_command "rm -rf
-  .yarn
+  .pnpm
   build/
   coverage/
   dist/
@@ -57,8 +57,8 @@ run_command "rm -rf
   storybook-static/
   lerna-debug.log*
   npm-debug.log*
-  yarn-debug.log*
-  yarn-error.log*
+  pnpm-debug.log*
+  pnpm-error.log*
   "
 
 REMAINING_FILES=$(git clean -xdn)
