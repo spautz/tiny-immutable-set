@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.0
+
+### Minor Changes
+
+- Confirm support for Node 20 ([#16](https://github.com/spautz/tiny-immutable-set/issues/16)) ([8ab9c40](https://github.com/spautz/tiny-immutable-set/commit/8ab9c40d4ca882ed43999260fadb8fee24da3b06))
+- Update and modernize package build ([#16](https://github.com/spautz/tiny-immutable-set/issues/16)) ([8ab9c40](https://github.com/spautz/tiny-immutable-set/commit/8ab9c40d4ca882ed43999260fadb8fee24da3b06))
+- Add NPM provenance via Github actions ([#17](https://github.com/spautz/tiny-immutable-set/issues/17)) ([9930dea](https://github.com/spautz/tiny-immutable-set/commit/9930dea22b7362f06ea90c56df6b4db53bbd3875))
+
 ### [1.1.2](https://github.com/spautz/tiny-immutable-set/compare/v1.1.1...v1.1.2) (2021-06-18)
 
 - Minor updates to package.json and docs ([#11](https://github.com/spautz/tiny-immutable-set/issues/11)) ([141f846](https://github.com/spautz/tiny-immutable-set/commit/141f846e6a6962625209d7bf1f02ec4fb6f69d02))
