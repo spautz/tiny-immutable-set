@@ -1,13 +1,13 @@
 {
-  "name": "@spautz/package-template-workspace",
+  "name": "@spautz/tiny-immutable-set-workspace",
   "private": true,
-  "description": "My opinionated template for a npm library repo",
+  "description": "Root workspace for Tiny-Immutable-Set",
   "license": "MIT",
-  "homepage": "https://github.com/spautz/package-template#readme",
-  "bugs": "https://github.com/spautz/package-template/issues",
+  "homepage": "https://github.com/spautz/tiny-immutable-set#readme",
+  "bugs": "https://github.com/spautz/tiny-immutable-set/issues",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/spautz/package-template.git"
+    "url": "git+https://github.com/spautz/tiny-immutable-set.git"
   },
   "author": {
     "name": "Steven Pautz",

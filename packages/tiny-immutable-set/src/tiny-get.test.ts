@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import { get } from '@ngard/tiny-get';
 
-import { set } from '.';
+import { set } from './index';
 
 /*
  * This is adapted from the test suite from tiny-get, which this library is inspired by.

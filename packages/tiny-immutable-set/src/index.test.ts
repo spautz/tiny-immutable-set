@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import { set } from '.';
+import { set } from './index';
 
 /*
  * This comes from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
