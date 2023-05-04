@@ -2,88 +2,122 @@
   "name": "tiny-immutable-set",
   "version": "1.1.2",
   "description": "Minimal, immutable deep set",
-  "keywords": ["immutable set", "tiny-set", "lodash set", "deep set"],
+  "keywords": [
+    "immutable set",
+    "tiny-set",
+    "lodash set",
+    "deep set"
+  ],
   "license": "MIT",
-  "homepage": "https://github.com/spautz/tiny-immutable-set#readme",
-  "bugs": "https://github.com/spautz/tiny-immutable-set/issues",
+  "homepage": "https://github.com/spautz/limited-cache/tree/main/packages/limited-cache#readme",
+  "bugs": "https://github.com/spautz/limited-cache/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/spautz/tiny-immutable-set.git"
+    "url": "git+https://github.com/spautz/limited-cache.git",
+    "directory": "packages/limited-cache"
   },
   "author": {
     "name": "Steven Pautz",
-    "url": "http://stevenpautz.com/"
+    "url": "https://github.com/spautz"
   },
-  "files": ["dist/", "legacy-types/", "src/", "LICENSE", "*.md"],
-  "source": "src/index.ts",
-  "main": "dist/index.js",
-  "module": "dist/tiny-immutable-set.esm.js",
-  "jsnext:main": "dist/tiny-immutable-set.esm.js",
-  "types": "dist/index.d.ts",
-  "sideEffects": false,
-  "engines": {
-    "node": "^16 || ^18 || ^19 || ^20",
-    "pnpm": "^8"
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "tag": "next"
   },
-  "packageManager": "pnpm@8.4.8",
+  "files": [
+    "dist/",
+    "docs/",
+    "legacy-types/",
+    "src/",
+    "LICENSE",
+    "*.md"
+  ],
+  "source": "./src/index.ts",
   "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "jsnext:main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
   "scripts": {
-    "____ LIFECYCLE HOOKS _______________________________________________": "",
-    "prepare": "pnpm run build && husky install",
-    "prerelease": "pnpm run build:clean",
-    "prepublishOnly": "pnpm run dev:readonly && pnpm run build",
+    "____ HOOKS _________________________________________________________": "",
+    "prepare": "pnpm run build:main",
+    "prepack": "pnpm run clean && pnpm run build",
     "____ INTEGRATION ___________________________________________________": "",
-    "clean": "pnpm run build:clean && pnpm run test:clean && rimraf ./node_modules/.cache/",
-    "dev": "pnpm run format && pnpm run types && pnpm run lint",
-    "dev:readonly": "pnpm run format:verify && pnpm run types && pnpm run lint",
-    "all": "pnpm run clean && pnpm run dev && pnpm run test:coverage && pnpm run build",
-    "all:readonly": "pnpm run dev:readonly && pnpm run test:coverage",
+    "clean": "pnpm run build:clean && pnpm run test:clean && rimraf --glob ./node_modules/.cache *.log",
+    "all": "pnpm run format                 && pnpm run typecheck && pnpm run lint:fix && pnpm run test:coverage && pnpm run build",
+    "all:readonly": "pnpm run format:verify && pnpm run typecheck && pnpm run lint     && pnpm run test:quick",
+    "all:quick": "pnpm run format           && pnpm run typecheck && pnpm run lint:fix",
+    "all:ci": "pnpm run format:verify       && pnpm run typecheck && pnpm run lint     && pnpm run test:ci && pnpm run build",
     "____ INDIVIDUAL COMMANDS ___________________________________________": "",
-    "build": "pnpm run build:clean && pnpm run build:main && pnpm run build:types",
+    "build": "pnpm run build:main && pnpm run sizecheck && pnpm run build:legacytypes",
     "build:clean": "rimraf ./dist ./legacy-types",
-    "build:main": "tsdx build",
-    "build:types": "pnpm run build:types:3.x && pnpm run build:types:4.x",
-    "build:types:3.x": "downlevel-dts ./dist ./legacy-types/ts3.x/dist --to=3.0",
-    "build:types:4.x": "downlevel-dts ./dist ./dist --to=4.0",
-    "build:watch": "tsdx watch",
-    "format": "prettier --write \"**/*.*\"",
-    "format:verify": "prettier --list-different \"**/*.*\"",
-    "lint": "tsdx lint . --max-warnings 0",
-    "lint-staged": "lint-staged",
-    "release:changelog": "standard-version --skip.commit --skip.tag --release-as ",
-    "release:tag": "standard-version --commit-all --sign --skip.changelog --release-as ",
+    "build:main": "pnpm run build:clean && tsup src/index.ts --format cjs && tsc -p ./tsconfig.build.json",
+    "build:legacytypes": "pnpm run build:legacytypes:3.5 && pnpm run build:legacytypes:4.0 && pnpm run build:legacytypes:4.5",
+    "build:legacytypes:3.5": "downlevel-dts ./dist ./legacy-types/ts3.5 --to=3.5",
+    "build:legacytypes:4.0": "downlevel-dts ./dist ./legacy-types/ts4.0 --to=4.0",
+    "build:legacytypes:4.5": "downlevel-dts ./dist ./legacy-types/ts4.5 --to=4.5",
+    "build:watch": "pnpm run build:clean && tsup src/index.ts --format esm,cjs --dts --watch",
+    "format": "prettier --write .",
+    "format:verify": "prettier --list-different .",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --max-warnings 0 --fix",
+    "sizecheck": "size-limit",
     "test": "pnpm run test:coverage",
     "test:clean": "rimraf ./coverage",
-    "test:coverage": "pnpm run test:clean && tsdx test --coverage",
-    "test:nowatch": "pnpm run test:clean && tsdx test",
-    "test:watch": "pnpm run test:clean && tsdx test --watch",
-    "test:watchcoverage": "pnpm run test:clean && tsdx test --watchAll --coverage",
-    "types": "tsc --noEmit --p tsconfig.json"
+    "test:ci": "pnpm run test:clean            && vitest run --coverage",
+    "test:coverage": "pnpm run test:clean      && vitest run --coverage",
+    "test:quick": "pnpm run test:clean         && vitest run --coverage=false",
+    "test:watch": "pnpm run test:clean         && vitest watch --coverage=false",
+    "test:watchcoverage": "pnpm run test:clean && vitest watch --coverage",
+    "typecheck": "tsc -p ./tsconfig.json --noEmit"
   },
   "dependencies": {},
   "devDependencies": {
     "@ngard/tiny-get": "1.2.2",
-    "@types/jest": "26.0.24",
-    "@types/node": "18.16.3",
-    "downlevel-dts": "0.11.0",
-    "husky": "8.0.3",
-    "lint-staged": "13.2.2",
-    "rimraf": "5.0.0",
-    "standard-version": "9.3.2",
-    "tsdx": "0.14.1",
-    "typescript": "5.0.4"
+    "@types/node": "18.16.3"
   },
-  "lint-staged": {
-    "**/*.{css,html,js,jsx,json,less,md,scss,ts,tsx}": ["prettier --write"]
-  },
-  "standard-version": {
-    "scripts": {
-      "postchangelog": "pnpm run format"
+  "peerDependencies": {},
+  "size-limit": [
+    {
+      "path": "dist/index.js",
+      "import": "{}",
+      "limit": "20 B"
+    },
+    {
+      "path": "dist/index.js",
+      "limit": "2 kB"
     }
-  },
+  ],
   "typesVersions": {
-    "<4": {
-      "*": ["legacy-types/ts3.x/*"]
+    "<4.0": {
+      "*": [
+        "legacy-types/ts3.5/index.d.ts"
+      ]
+    },
+    "<4.5": {
+      "*": [
+        "legacy-types/ts4.0/index.d.ts"
+      ]
+    },
+    "<4.7": {
+      "*": [
+        "legacy-types/ts4.5/index.d.ts"
+      ]
+    },
+    "*": {
+      "*": [
+        "dist/index.d.ts"
+      ]
     }
   }
 }

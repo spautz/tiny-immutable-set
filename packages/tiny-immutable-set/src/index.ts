@@ -5,7 +5,8 @@ const clone = (objectOrArray: ObjectOrArray): ObjectOrArray =>
   isArray(objectOrArray) ? Array.from(objectOrArray) : Object.assign({}, objectOrArray);
 
 // This approach and regex come from https://github.com/NickGard/tiny-get
-const pathSeperatorRegex = /\[\s*(['"])(.*?)\1\s*\]|^\s*(\w+)\s*(?=\.|\[|$)|\.\s*(\w*)\s*(?=\.|\[|$)|\[\s*(-?\d+)\s*\]/g;
+const pathSeperatorRegex =
+  /\[\s*(['"])(.*?)\1\s*\]|^\s*(\w+)\s*(?=\.|\[|$)|\.\s*(\w*)\s*(?=\.|\[|$)|\[\s*(-?\d+)\s*\]/g;
 
 const set = <T extends ObjectOrArray = ObjectOrArray>(
   root: T,
@@ -22,7 +23,7 @@ const set = <T extends ObjectOrArray = ObjectOrArray>(
 
   let currentParent: any = newRoot;
   let previousKey: string;
-  let previousKeyIsArrayIndex: boolean = false;
+  let previousKeyIsArrayIndex = false;
   // This approach and regex come from https://github.com/NickGard/tiny-get
   if (isArray(path)) {
     path = "['" + path.join("']['") + "']";

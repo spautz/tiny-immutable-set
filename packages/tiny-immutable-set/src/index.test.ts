@@ -6,12 +6,12 @@ import { set } from './index';
  */
 function deepFreeze(object: any) {
   // Retrieve the property names defined on object
-  var propNames = Object.getOwnPropertyNames(object);
+  const propNames = Object.getOwnPropertyNames(object);
 
   // Freeze properties before freezing self
 
-  for (let name of propNames) {
-    let value = object[name];
+  for (const name of propNames) {
+    const value = object[name];
 
     if (value && typeof value === 'object') {
       deepFreeze(value);
