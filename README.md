@@ -4,11 +4,11 @@ A minimal, immutable, deep set utility for Javascript objects and arrays.
 
 Inspired by, and based on, [NickGard's tiny-get](https://github.com/NickGard/tiny-get)
 
-[![npm version](https://img.shields.io/npm/v/tiny-immutable-set.svg)](https://www.npmjs.com/package/tiny-immutable-set)
-[![build status](https://github.com/spautz/tiny-immutable-set/workflows/CI/badge.svg)](https://github.com/spautz/tiny-immutable-set/actions)
-[![dependencies status](https://img.shields.io/badge/dependencies-none-green.svg)](https://david-dm.org/spautz/tiny-immutable-set)
-[![gzip size](https://img.badgesize.io/https://unpkg.com/tiny-immutable-set@latest/dist/tiny-immutable-set.cjs.production.min.js?compression=gzip)](https://bundlephobia.com/result?p=tiny-immutable-set)
-[![test coverage](https://img.shields.io/coveralls/github/spautz/tiny-immutable-set/main.svg)](https://coveralls.io/github/spautz/tiny-immutable-set?branch=main)
+[![npm version](https://img.shields.io/npm/v/@spautz/node-library-template.svg)](https://www.npmjs.com/package/@spautz/node-library-template)
+[![build status](https://github.com/spautz/package-template/workflows/CI/badge.svg)](https://github.com/spautz/package-template/actions)
+[![test coverage](https://img.shields.io/coveralls/github/spautz/package-template/main.svg)](https://coveralls.io/github/spautz/package-template?branch=main)
+[![dependencies status](https://img.shields.io/librariesio/release/npm/@spautz/node-library-template.svg)](https://libraries.io/github/spautz/package-template)
+[![gzip size](https://img.shields.io/bundlephobia/minzip/@spautz/node-library-template.svg)](https://bundlephobia.com/package/@spautz/node-library-template@latest)
 
 ## Usage
 

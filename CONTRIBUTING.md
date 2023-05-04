@@ -1,8 +1,8 @@
 # Contributing
 
-Thanks for your interest in tiny-immutable-set! You are very welcome to contribute.
+Thanks for your interest in Tiny-Immutable-Set! You are very welcome to contribute.
 
-By contributing to tiny-immutable-set, you agree to abide by the [code of conduct](./CODE_OF_CONDUCT.md).
+By contributing to Tiny-Immutable-Set, you agree to abide by the [code of conduct](./CODE_OF_CONDUCT.md).
 
 ## Reporting Bugs and Asking Questions
 
@@ -40,14 +40,16 @@ to discuss your idea and make sure it is inline with the project goals.
 4. To test your local dev version of `tiny-immutable-set` in other projects, [Yalc](https://github.com/whitecolor/yalc)
    is an excellent tool.
 
-5. After you have made your changes, submit a pull request. Issues and pull requests are monitored, and you should receive a reply.
+5. After you have made your changes, submit a pull request. Issues and pull requests are monitored, and you should
+   receive a reply.
 
 ## Code and Project Standards
 
-Eslint, Typescript, and Prettier enforce most code standards. A pre-push hook will validate the project against those standards.
+Eslint, Typescript, and Prettier enforce most code standards.
+A pre-push hook will validate the project against those standards.
 
 Running `yarn test` will check the code against unit tests and generate a code coverage report (in `coverage/`).
-This project's goal is to be at or near 100% code coverage.
+This project's goal is to be near 100% code coverage.
 
 Running `yarn all` will check _everything_: tests, code standards, and the build itself.
 Your pull request is more likely to be accepted if this passes for your branch.
