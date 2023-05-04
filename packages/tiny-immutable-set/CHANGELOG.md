@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.0
+## [1.2.0](https://github.com/spautz/tiny-immutable-set/compare/v1.1.2...v1.2.0) (2023-05-03)
 
 ### Minor Changes
 
