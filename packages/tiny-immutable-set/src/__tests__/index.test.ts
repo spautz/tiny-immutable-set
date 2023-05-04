@@ -1,17 +1,20 @@
-/* eslint-env jest */
-import { set } from '.';
+import { describe, expect, it } from 'vitest';
+
+import { set } from '../index';
 
 /*
  * This comes from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze
  */
-function deepFreeze(object: any) {
+function deepFreeze(object: object) {
   // Retrieve the property names defined on object
-  var propNames = Object.getOwnPropertyNames(object);
+  const propNames = Object.getOwnPropertyNames(object);
 
   // Freeze properties before freezing self
 
-  for (let name of propNames) {
-    let value = object[name];
+  for (const name of propNames) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const value = object[name];
 
     if (value && typeof value === 'object') {
       deepFreeze(value);
@@ -49,6 +52,7 @@ describe('basic functionality', () => {
   });
 
   describe('deep objects', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let obj: any;
     beforeEach(() => {
       obj = {

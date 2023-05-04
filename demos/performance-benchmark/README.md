@@ -23,7 +23,7 @@ Lower times are better. Last run on September 13, 2020.
 The easiest way to run the benchmarks is to use the immutable-assign repo directly:
 
 1. Clone https://github.com/engineforce/ImmutableAssign
-2. Copy/paste the code from [`./tiny-immutable-set-benchmark.js`](./tiny-immutable-set-benchmark.js) to `debug/benchmarks.js` in your clone of immutable-assign, following the pattern in that file
+2. Copy/paste the code from [`./tiny-immutable-set-benchmark.js`](tiny-immutable-set-benchmark.js) to `debug/benchmarks.js` in your clone of immutable-assign, following the pattern in that file
 3. In your immutable-assign clone, `npm install tiny-immutable-set`
 4. In your immutable-assign clone, upgrade any other immutable libraries you wish to test, since a few are outdated in that repo
 5. In your immutable-assign clone, `npm run benchmarks`

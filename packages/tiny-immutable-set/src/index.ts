@@ -1,17 +1,20 @@
 const { isArray } = Array;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ObjectOrArray = Record<string, any> | Array<any>;
 const clone = (objectOrArray: ObjectOrArray): ObjectOrArray =>
   isArray(objectOrArray) ? Array.from(objectOrArray) : Object.assign({}, objectOrArray);
 
 // This approach and regex come from https://github.com/NickGard/tiny-get
-const pathSeperatorRegex = /\[\s*(['"])(.*?)\1\s*\]|^\s*(\w+)\s*(?=\.|\[|$)|\.\s*(\w*)\s*(?=\.|\[|$)|\[\s*(-?\d+)\s*\]/g;
+const pathSeperatorRegex =
+  /\[\s*(['"])(.*?)\1\s*\]|^\s*(\w+)\s*(?=\.|\[|$)|\.\s*(\w*)\s*(?=\.|\[|$)|\[\s*(-?\d+)\s*\]/g;
 
-const set = <T = ObjectOrArray>(
+const set = <T extends ObjectOrArray = ObjectOrArray>(
   root: T,
   path: string | number | Array<string | number>,
   newValue: unknown,
 ): T => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const newRoot: any = clone(root);
 
   if (typeof path === 'number' || (!isArray(path) && path in newRoot)) {
@@ -20,15 +23,17 @@ const set = <T = ObjectOrArray>(
     return newRoot;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let currentParent: any = newRoot;
   let previousKey: string;
-  let previousKeyIsArrayIndex: boolean = false;
+  let previousKeyIsArrayIndex = false;
   // This approach and regex come from https://github.com/NickGard/tiny-get
   if (isArray(path)) {
     path = "['" + path.join("']['") + "']";
   }
   path.replace(
     pathSeperatorRegex,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     (wholeMatch, _quotationMark, quotedProp, firstLevel, namedProp, index) => {
       if (previousKey) {
@@ -56,6 +61,7 @@ const set = <T = ObjectOrArray>(
     },
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   currentParent[previousKey!] = newValue;
   return newRoot;
 };
