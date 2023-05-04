@@ -1,5 +1,6 @@
 const { isArray } = Array;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ObjectOrArray = Record<string, any> | Array<any>;
 const clone = (objectOrArray: ObjectOrArray): ObjectOrArray =>
   isArray(objectOrArray) ? Array.from(objectOrArray) : Object.assign({}, objectOrArray);
@@ -13,6 +14,7 @@ const set = <T extends ObjectOrArray = ObjectOrArray>(
   path: string | number | Array<string | number>,
   newValue: unknown,
 ): T => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const newRoot: any = clone(root);
 
   if (typeof path === 'number' || (!isArray(path) && path in newRoot)) {
@@ -21,6 +23,7 @@ const set = <T extends ObjectOrArray = ObjectOrArray>(
     return newRoot;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let currentParent: any = newRoot;
   let previousKey: string;
   let previousKeyIsArrayIndex = false;
@@ -30,6 +33,7 @@ const set = <T extends ObjectOrArray = ObjectOrArray>(
   }
   path.replace(
     pathSeperatorRegex,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     (wholeMatch, _quotationMark, quotedProp, firstLevel, namedProp, index) => {
       if (previousKey) {
@@ -57,6 +61,7 @@ const set = <T extends ObjectOrArray = ObjectOrArray>(
     },
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   currentParent[previousKey!] = newValue;
   return newRoot;
 };
