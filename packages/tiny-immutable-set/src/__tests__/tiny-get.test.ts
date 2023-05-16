@@ -3,7 +3,7 @@
 import { describe, expect, it } from 'vitest';
 import { get } from '@ngard/tiny-get';
 
-import { set } from '../index';
+import { set } from '../index.js';
 
 /*
  * This is adapted from the test suite from tiny-get, which this library is inspired by.
