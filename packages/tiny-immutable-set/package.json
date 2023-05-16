@@ -84,7 +84,7 @@
   "dependencies": {},
   "devDependencies": {
     "@ngard/tiny-get": "1.2.2",
-    "@types/node": "18.16.3"
+    "@types/node": "20.1.5"
   },
   "peerDependencies": {},
   "size-limit": [
