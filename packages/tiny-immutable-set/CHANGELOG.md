@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1
+
+### Patch Changes
+
+- Update devDependencies for build ([#19](https://github.com/spautz/tiny-immutable-set/issues/19)) ([71696d1](https://github.com/spautz/tiny-immutable-set/commit/71696d1fc6b3c7f2d760ef00c32de38629a683e8))
+
 ## [1.2.0](https://github.com/spautz/tiny-immutable-set/compare/v1.1.2...v1.2.0) (2023-05-03)
 
 ### Minor Changes
