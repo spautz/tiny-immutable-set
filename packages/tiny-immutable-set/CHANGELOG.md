@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.3.0
+
+### Minor Changes
+
+- Support "bundler" moduleResolution ([#21](https://github.com/spautz/tiny-immutable-set/issues/21)) ([feef3e5](https://github.com/spautz/tiny-immutable-set/commit/feef3e50d07ae6112d8d44cc1e44613fae62ffbc))
+
+### Patch Changes
+
+- Update devDependencies and build system. There should be no changes from this ([#21](https://github.com/spautz/tiny-immutable-set/issues/21)) ([feef3e5](https://github.com/spautz/tiny-immutable-set/commit/feef3e50d07ae6112d8d44cc1e44613fae62ffbc))
+
 ## 1.2.1
 
 ### Patch Changes
