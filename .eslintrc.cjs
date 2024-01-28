@@ -6,7 +6,6 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
 
-
   rules: {
     '@typescript-eslint/no-unused-vars': [
       'error',
@@ -18,8 +17,8 @@ module.exports = {
   },
   overrides: [
     {
-      // Allow `require` in CommonJS files
-      files: ['**/*.cjs'],
+      // Allow `require` in dev configs
+      files: ['./*.config.*', './packages/*/*.config.*'],
       rules: {
         '@typescript-eslint/no-var-requires': 'off',
       },
@@ -36,5 +35,7 @@ module.exports = {
     'lib-dist/',
     'node_modules/',
     'storybook-static/',
+    // Each framework-test has its own eslint config, following the conventions of its framework, so they're not included
+    'framework-tests/',
   ],
 };

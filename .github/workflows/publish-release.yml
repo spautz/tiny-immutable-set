@@ -1,7 +1,6 @@
 name: Publish Release
 
-on:
-  workflow_dispatch
+on: workflow_dispatch
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -22,7 +21,7 @@ jobs:
         && github.ref_protected == true
     strategy:
       matrix:
-        package-name: [ tiny-immutable-set ]
+        package-name: [tiny-immutable-set]
     steps:
       - uses: actions/checkout@v3
         with:
