@@ -98,12 +98,12 @@
   "peerDependencies": {},
   "size-limit": [
     {
-      "path": "./dist/index.js",
+      "path": "./dist/esm/index.js",
       "import": "{}",
       "limit": "20 B"
     },
     {
-      "path": "./dist/index.js",
+      "path": "./dist/esm/index.js",
       "limit": "1 kB"
     }
   ],
