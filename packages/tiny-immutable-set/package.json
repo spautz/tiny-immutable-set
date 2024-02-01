@@ -93,7 +93,7 @@
   "dependencies": {},
   "devDependencies": {
     "@ngard/tiny-get": "1.2.2",
-    "@types/node": "20.11.10"
+    "@types/node": "20.11.14"
   },
   "peerDependencies": {},
   "size-limit": [
@@ -104,7 +104,12 @@
     },
     {
       "path": "./dist/esm/index.js",
-      "limit": "1 kB"
+      "limit": "1 kb"
+    },
+    {
+      "path": "./dist/esm/index.js",
+      "import": "{ set }",
+      "limit": "1 kb"
     }
   ],
   "typesVersions": {
