@@ -90,7 +90,7 @@
   "dependencies": {},
   "devDependencies": {
     "@ngard/tiny-get": "1.2.2",
-    "@types/node": "20.11.14"
+    "@types/node": "20.11.16"
   },
   "peerDependencies": {},
   "size-limit": [
