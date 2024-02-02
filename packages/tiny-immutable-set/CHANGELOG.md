@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.1
+
+### Patch Changes
+
+- Bugfix: ensure typings are published with the package ([#23](https://github.com/spautz/tiny-immutable-set/issues/23)) ([ce75f89](https://github.com/spautz/tiny-immutable-set/commit/ce75f89e1bf3aba162116bb9afbe8716ae633de1))
+
 ## 1.3.0
 
 ### Minor Changes
