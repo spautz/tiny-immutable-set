@@ -12,16 +12,18 @@ source ./scripts/helpers/helpers.sh
 
 ###################################################################################################
 
-if command_exists act; then
-  # act =  https://github.com/nektos/act
-  act
-else
-  emit_warning "Could not find 'act': https://github.com/nektos/act"
-  exit 1
-fi
+# This script assumes you've already run either `setup-local-environment.sh` or
+# `setup-ci-environment.sh`
 
-# @TODO: Detect actions-runner/Runner.Client
-# https://github.com/ChristopherHX/runner.server
+for DIRECTORY in framework-tests/*/ ; do
+  pushd $DIRECTORY
+
+  # Use workspace's copy of Yalc to copy over any necessary local packages, so that they'll be
+  # in place when we try to install
+  ../../node_modules/.bin/yalc update
+
+  popd
+done
 
 ###################################################################################################
 

@@ -17,8 +17,8 @@ module.exports = {
   },
   overrides: [
     {
-      // Allow `require` in dev configs
-      files: ['./*.config.*', './packages/*/*.config.*'],
+      // Allow `require` in CommonJS files
+      files: ['**/*.cjs'],
       rules: {
         '@typescript-eslint/no-var-requires': 'off',
       },
