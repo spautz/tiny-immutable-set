@@ -26,4 +26,4 @@ The original `state` is not modified.
 - Unlike most other setter utilities, this is slightly faster if you use a string for the path, instead of an array: `set(obj, "deep.path[123]", newVal)` instead of `set(obj, ["deep", "path", 123], newVal)`.
 - The small bundle size of this library comes with a slight speed tradeoff. This library is a little slower than
   immutable-assign and immutable.js, but a little faster than Immer and seamless-immutable.
-  [See full benchmark here.](./benchmark)
+  [See full benchmark here.](../../demos/performance-benchmark)
