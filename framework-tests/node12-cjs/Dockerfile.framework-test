@@ -6,7 +6,7 @@
 ARG NODE_VERSION=12
 
 FROM node:${NODE_VERSION}-bullseye-slim as base-workspace
-WORKDIR /framework-test-node12
+WORKDIR /framework-test-node12-cjs
 
 
 # 'base' is deps + project source
@@ -20,7 +20,7 @@ FROM base-workspace as base
 
 # deps come second so that we don't lose any lockfile changes
 COPY . ./
-COPY --from=base-deps /framework-test-node12 /framework-test-node12/
+COPY --from=base-deps /framework-test-node12-cjs /framework-test-node12-cjs/
 RUN npm run clean
 
 
@@ -36,4 +36,4 @@ CMD npm run framework-test:ci
 
 
 FROM run-all as default
-LABEL framework-test-name="node12"
+LABEL framework-test-name="node12-cjs"

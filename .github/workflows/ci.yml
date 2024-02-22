@@ -82,7 +82,7 @@ jobs:
       matrix:
         framework-test-name:
           [
-            node20,
+            node20-esm,
           ]
 
     steps:
