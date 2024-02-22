@@ -51,7 +51,6 @@
   },
   "main": "./dist/cjs/index.cjs",
   "module": "./dist/esm/index.js",
-  "jsnext:main": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
   "sideEffects": false,
   "scripts": {
@@ -90,7 +89,7 @@
   "dependencies": {},
   "devDependencies": {
     "@ngard/tiny-get": "1.2.2",
-    "@types/node": "20.11.16"
+    "@types/node": "20.11.19"
   },
   "peerDependencies": {},
   "size-limit": [
@@ -101,12 +100,8 @@
     },
     {
       "path": "./dist/esm/index.js",
-      "limit": "1 kb"
-    },
-    {
-      "path": "./dist/esm/index.js",
       "import": "{ set }",
-      "limit": "1 kb"
+      "limit": "300 B"
     }
   ],
   "typesVersions": {
