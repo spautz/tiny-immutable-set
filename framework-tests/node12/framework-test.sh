@@ -23,8 +23,8 @@ EXTRA_ARGS="${*:2}"
 run_command docker compose -f ./docker-compose.framework-test.yaml            \
   up --build --remove-orphans $EXTRA_ARGS
 
-CONTAINER_ID=$(docker ps -a --filter=name=node20-main-container --format "{{.ID}}" --last 1)
-IMAGE_ID=$(docker images --filter=reference=node20-main-container --format "{{.ID}}")
+CONTAINER_ID=$(docker ps -a --filter=name=node12-main-container --format "{{.ID}}" --last 1)
+IMAGE_ID=$(docker images --filter=reference=node12-main-container --format "{{.ID}}")
 EXIT_CODE=$(docker inspect $CONTAINER_ID --format='{{.State.ExitCode}}')
 
 echo "CONTAINER_ID=$CONTAINER_ID"
@@ -32,7 +32,7 @@ echo "IMAGE_ID=$IMAGE_ID"
 
 # Sync back the lockfile, in case it changed
 if [[ $EXIT_CODE -eq 0 ]]; then
-  run_command docker cp $CONTAINER_ID:/framework-test-node20/package-lock.json ./
+  run_command docker cp $CONTAINER_ID:/framework-test-node12/package-lock.json ./
 else
   exit $EXIT_CODE
 fi
