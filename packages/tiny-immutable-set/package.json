@@ -51,21 +51,21 @@
   },
   "main": "./dist/cjs/index.cjs",
   "module": "./dist/esm/index.js",
-  "jsnext:main": "./dist/esm/index.js",
   "types": "./dist/esm/index.d.ts",
   "sideEffects": false,
   "scripts": {
     "____ HOOKS _________________________________________________________": "",
     "prepack": "pnpm run clean && pnpm run build",
+    "postpack": "pnpm run build:verifypack",
     "____ INTEGRATION ___________________________________________________": "",
     "clean": "pnpm run build:clean && pnpm run test:clean && rimraf --glob ./node_modules/.cache *.log",
     "all": "pnpm run          typecheck && pnpm run lint:fix && pnpm run test:coverage && pnpm run build",
     "all:readonly": "pnpm run typecheck && pnpm run lint     && pnpm run test:quick",
     "all:quick": "pnpm run    typecheck && pnpm run lint:fix",
-    "all:ci": "pnpm run       typecheck && pnpm run lint     && pnpm run test:ci && pnpm run build",
+    "all:ci": "pnpm run       typecheck && pnpm run lint     && pnpm run test:ci && pnpm pack",
     "____ INDIVIDUAL COMMANDS ___________________________________________": "",
     "build": "pnpm run build:clean && pnpm run build:cjs && pnpm run build:esm && pnpm run build:verify && pnpm run build:legacytypes",
-    "build:clean": "rimraf ./dist ./legacy-types",
+    "build:clean": "rimraf --glob ./dist ./legacy-types ./*.tgz",
     "build:cjs": "tsup src/index.ts --format cjs --dts --outDir=./dist/cjs/ --tsconfig=./tsconfig.build-cjs.json",
     "build:cjs:watch": "pnpm run build:cjs --watch",
     "build:esm": "tsc -p tsconfig.build-esm.json",
@@ -75,6 +75,7 @@
     "build:legacytypes:4.0": "downlevel-dts ./dist ./legacy-types/ts4.0/dist --to=4.0",
     "build:legacytypes:4.5": "downlevel-dts ./dist ./legacy-types/ts4.5/dist --to=4.5",
     "build:verify": "publint --strict && size-limit",
+    "build:verifypack": "ls *.tgz | xargs -I {} attw {} --exclude-entrypoints internal-raw-src",
     "lint": "eslint . --max-warnings 0",
     "lint:fix": "eslint . --max-warnings 0 --fix",
     "test": "pnpm run test:coverage",
@@ -90,7 +91,7 @@
   "dependencies": {},
   "devDependencies": {
     "@ngard/tiny-get": "1.2.2",
-    "@types/node": "20.11.16"
+    "@types/node": "20.11.19"
   },
   "peerDependencies": {},
   "size-limit": [
@@ -101,12 +102,8 @@
     },
     {
       "path": "./dist/esm/index.js",
-      "limit": "1 kb"
-    },
-    {
-      "path": "./dist/esm/index.js",
       "import": "{ set }",
-      "limit": "1 kb"
+      "limit": "300 B"
     }
   ],
   "typesVersions": {

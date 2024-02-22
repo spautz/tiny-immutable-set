@@ -54,3 +54,23 @@ jobs:
         run: |
           cd packages/${{ matrix.package-name }}
           pnpm run all:ci
+
+  demo-ci:
+    name: Demo CI
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        demo-name: [basic-demo]
+
+    steps:
+      - uses: actions/checkout@v3.5.3
+
+      - uses: ./.github/reusable-workflows/setup-repo
+        with:
+          node-version: latest
+          use-lockfile: false
+
+      - name: Run CI checks for demo
+        run: |
+          cd demos/${{ matrix.demo-name }}
+          pnpm run all:ci
