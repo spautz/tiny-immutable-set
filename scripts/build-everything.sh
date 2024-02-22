@@ -15,7 +15,7 @@ source ./scripts/helpers/helpers.sh
 # This will take a while to run.
 
 ./scripts/build-workspace.sh
-#TODO: ./scripts/build-framework-tests.sh
+./scripts/build-framework-tests.sh
 
 ###################################################################################################
 
