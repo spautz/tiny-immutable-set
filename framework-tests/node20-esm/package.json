@@ -5,7 +5,7 @@
   "engines": {
     "node": "^20"
   },
-  "packageManager": "npm@10.1.0",
+  "packageManager": "npm@10.2.4",
   "type": "module",
   "scripts": {
     "____ FOR FRAMEWORK-TEST ____________________________________________": "",
