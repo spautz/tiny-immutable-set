@@ -1,0 +1,77 @@
+docker-compose.framework-test.yaml
+Dockerfile.framework-test
+framework-test.sh
+framework-test-interactive.sh
+
+#
+# Everything below this point is copied from the root .gitignore
+#
+
+# IDEs, etc
+
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# dependencies
+
+.pnp
+.pnp.js
+.pnpm-store/
+node_modules/
+
+# unit tests
+
+coverage/
+
+# e2e tests
+
+e2e-test-output/
+playwright-report/
+
+# linting
+
+.eslintcache
+
+# build output
+
+*.tsbuildinfo
+
+.cache/
+.next/
+build/
+dist/
+dist-ssr/
+legacy-types/
+out/
+public/build/
+
+# storybook
+
+storybook-static/
+
+# framework-tests
+
+framework-tests/*/.yalc/
+
+# log files
+
+lerna-debug.log*
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# misc
+
+.env.local
+.env*.local
+.vercel
+*.pem
+next-env.d.ts
