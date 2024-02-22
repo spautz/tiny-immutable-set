@@ -1,11 +1,11 @@
 {
-  "name": "node12-cjs",
+  "name": "node10",
   "private": true,
-  "description": "Framework-test for tiny-immutable-set using Node v12",
+  "description": "Framework-test for tiny-immutable-set using Node v10",
   "engines": {
-    "node": "^12"
+    "node": "^10"
   },
-  "packageManager": "npm@6.14.16",
+  "packageManager": "npm@6.14.12",
   "scripts": {
     "____ FOR FRAMEWORK-TEST ____________________________________________": "",
     "clean": "true",

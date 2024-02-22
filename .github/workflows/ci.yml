@@ -80,10 +80,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        framework-test-name:
-          [
-            node20-esm,
-          ]
+        framework-test-name: [node10, node12-cjs, node20-esm]
 
     steps:
       - uses: actions/checkout@v3.5.3
