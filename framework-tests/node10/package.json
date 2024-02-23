@@ -1,0 +1,19 @@
+{
+  "name": "node10",
+  "private": true,
+  "description": "Framework-test for tiny-immutable-set using Node v10",
+  "engines": {
+    "node": "^10"
+  },
+  "packageManager": "npm@6.14.12",
+  "scripts": {
+    "____ FOR FRAMEWORK-TEST ____________________________________________": "",
+    "clean": "true",
+    "framework-test": "./internal-test-script/internal-test-script.js",
+    "framework-test:ci": "./internal-test-script/internal-test-script.js"
+  },
+  "dependencies": {
+    "tiny-immutable-set": "file:.yalc/tiny-immutable-set"
+  },
+  "devDependencies": {}
+}

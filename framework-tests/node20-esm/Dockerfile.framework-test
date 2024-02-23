@@ -1,0 +1,40 @@
+# syntax=docker/dockerfile:1
+
+# Local packages must be Yalc'd into this directory BEFORE building this image
+# (via ../../scripts/update-framework-tests.sh)
+
+ARG NODE_VERSION=20
+
+FROM node:${NODE_VERSION}-bullseye-slim as base-workspace
+WORKDIR /framework-test-node20-esm
+RUN corepack enable
+
+
+# 'base' is deps + project source
+FROM base-workspace as base-deps
+
+COPY package.json  ./
+COPY .yalc  .yalc/
+RUN npm install
+
+FROM base-workspace as base
+
+# deps come second so that we don't lose any lockfile changes
+COPY . ./
+COPY --from=base-deps /framework-test-node20-esm /framework-test-node20-esm/
+RUN npm run clean
+
+
+# A target for each check or test case. These are just for readability.
+#   'run-all' = all project checks
+#   'run-ci'  = all project checks, but for CI
+
+FROM base as run-all
+CMD npm run framework-test
+
+FROM base as run-ci
+CMD npm run framework-test:ci
+
+
+FROM run-all as default
+LABEL framework-test-name="node20-esm"

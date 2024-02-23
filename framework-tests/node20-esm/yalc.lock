@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "tiny-immutable-set": {
+      "signature": "3578fdb40a8cc8ff0067ae79d6d73ff7",
+      "file": true
+    }
+  }
+}

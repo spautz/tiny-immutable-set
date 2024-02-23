@@ -1,0 +1,21 @@
+{
+  "name": "node20-cjs",
+  "private": true,
+  "description": "Framework-test for tiny-immutable-set using Node v20",
+  "engines": {
+    "node": "^20"
+  },
+  "packageManager": "npm@10.2.4",
+  "type": "commonjs",
+  "scripts": {
+    "____ FOR FRAMEWORK-TEST ____________________________________________": "",
+    "preinstall": "npx only-allow npm",
+    "clean": "true",
+    "framework-test": "./internal-test-script/internal-test-script.js",
+    "framework-test:ci": "./internal-test-script/internal-test-script.js"
+  },
+  "dependencies": {
+    "tiny-immutable-set": "file:.yalc/tiny-immutable-set"
+  },
+  "devDependencies": {}
+}

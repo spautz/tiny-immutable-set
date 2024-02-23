@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  main-container:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.framework-test
+      target: '${DOCKER_BUILD_TARGET:-default}'
+    volumes:
+      - ./src:/framework-test-node20-cjs/src
+    # no ports

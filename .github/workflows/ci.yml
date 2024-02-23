@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 21.x]
+        node-version: [18.x, 20.x, latest]
 
     steps:
       - uses: actions/checkout@v3.5.3
@@ -74,3 +74,22 @@ jobs:
         run: |
           cd demos/${{ matrix.demo-name }}
           pnpm run all:ci
+
+  framework-test-ci:
+    name: Framework-Test CI
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        framework-test-name: [node10, node12-cjs, node12-esm, node20-cjs, node20-esm]
+
+    steps:
+      - uses: actions/checkout@v3.5.3
+
+      - uses: ./.github/reusable-workflows/setup-repo
+        with:
+          node-version: nvmrc
+          use-lockfile: false
+
+      - name: Run CI checks for framework-test
+        run: |
+          ./framework-tests/${{ matrix.framework-test-name }}/framework-test.sh run-ci
