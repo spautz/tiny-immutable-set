@@ -6,5 +6,5 @@ services:
       dockerfile: ./Dockerfile.framework-test
       target: '${DOCKER_BUILD_TARGET:-default}'
     volumes:
-      - ./src:/framework-test-node20-esm/src
+      - ./src:/framework-test-node20-cjs/src
     # no ports

@@ -24,8 +24,8 @@ run_command docker compose -f ./docker-compose.framework-test.yaml            \
   || true;
 
 CONTAINER_ID=$(docker ps -a --filter=name=node20-esm-main-container --format "{{.ID}}" --last 1)
-IMAGE_ID=$(docker images --filter=reference=node20-esm-main-container --format "{{.ID}}")
 echo "CONTAINER_ID=$CONTAINER_ID"
+IMAGE_ID=$(docker images --filter=reference=node20-esm-main-container --format "{{.ID}}")
 echo "IMAGE_ID=$IMAGE_ID"
 
 ###################################################################################################

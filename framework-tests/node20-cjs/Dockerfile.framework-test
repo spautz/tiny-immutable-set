@@ -6,7 +6,7 @@
 ARG NODE_VERSION=20
 
 FROM node:${NODE_VERSION}-bullseye-slim as base-workspace
-WORKDIR /framework-test-node20-esm
+WORKDIR /framework-test-node20-cjs
 RUN corepack enable
 
 
@@ -21,7 +21,7 @@ FROM base-workspace as base
 
 # deps come second so that we don't lose any lockfile changes
 COPY . ./
-COPY --from=base-deps /framework-test-node20-esm /framework-test-node20-esm/
+COPY --from=base-deps /framework-test-node20-cjs /framework-test-node20-cjs/
 RUN npm run clean
 
 
@@ -37,4 +37,4 @@ CMD npm run framework-test:ci
 
 
 FROM run-all as default
-LABEL framework-test-name="node20-esm"
+LABEL framework-test-name="node20-cjs"

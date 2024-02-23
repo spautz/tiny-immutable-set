@@ -24,11 +24,10 @@ run_command docker compose -f ./docker-compose.framework-test.yaml            \
   up --build --remove-orphans $EXTRA_ARGS
 
 CONTAINER_ID=$(docker ps -a --filter=name=node20-esm-main-container --format "{{.ID}}" --last 1)
-IMAGE_ID=$(docker images --filter=reference=node20-esm-main-container --format "{{.ID}}")
-EXIT_CODE=$(docker inspect $CONTAINER_ID --format='{{.State.ExitCode}}')
-
 echo "CONTAINER_ID=$CONTAINER_ID"
+IMAGE_ID=$(docker images --filter=reference=node20-esm-main-container --format "{{.ID}}")
 echo "IMAGE_ID=$IMAGE_ID"
+EXIT_CODE=$(docker inspect $CONTAINER_ID --format='{{.State.ExitCode}}')
 
 # Sync back the lockfile, in case it changed
 if [[ $EXIT_CODE -eq 0 ]]; then

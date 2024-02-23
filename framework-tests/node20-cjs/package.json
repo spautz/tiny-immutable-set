@@ -1,5 +1,5 @@
 {
-  "name": "node20-esm",
+  "name": "node20-cjs",
   "private": true,
   "description": "Framework-test for tiny-immutable-set using Node v20",
   "engines": {
